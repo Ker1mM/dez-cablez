@@ -1,0 +1,13 @@
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\bin\Debug\netcoreapp3.1\DezCablez.Services.deps.json
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\bin\Debug\netcoreapp3.1\DezCablez.Services.dll
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\bin\Debug\netcoreapp3.1\DezCablez.Data.dll
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\bin\Debug\netcoreapp3.1\DezCablez.Data.pdb
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\obj\Debug\netcoreapp3.1\DezCablez.Services.AssemblyInfoInputs.cache
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\obj\Debug\netcoreapp3.1\DezCablez.Services.AssemblyInfo.cs
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\obj\Debug\netcoreapp3.1\DezCablez.Services.csproj.CopyComplete
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\bin\Debug\netcoreapp3.1\DezCablez.Services.runtimeconfig.json
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\bin\Debug\netcoreapp3.1\DezCablez.Services.runtimeconfig.dev.json
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\bin\Debug\netcoreapp3.1\DezCablez.Services.pdb
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\obj\Debug\netcoreapp3.1\DezCablez.Services.csprojAssemblyReference.cache
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\obj\Debug\netcoreapp3.1\DezCablez.Services.dll
+D:\Projects\DezCablez\api.dezcablez\DezCablez.Services\obj\Debug\netcoreapp3.1\DezCablez.Services.pdb
