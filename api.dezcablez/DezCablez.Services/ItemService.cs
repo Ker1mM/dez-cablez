@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DezCablez.Services
 {
-    public class ItemsService : IItemsService
+    public class ItemService : IItemService
     {
         private readonly DezCablezDBContext context;
 
-        public ItemsService(DezCablezDBContext context)
+        public ItemService(DezCablezDBContext context)
         {
             this.context = context;
         }

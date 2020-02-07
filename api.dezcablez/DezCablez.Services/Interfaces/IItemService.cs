@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DezCablez.Services.Interfaces
 {
-    public interface IItemsService
+    public interface IItemService
     {
        Task<IEnumerable<Item>> GetAllItemsAsync();
 

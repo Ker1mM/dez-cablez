@@ -5,7 +5,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DezCablez.Data.Models;
+using DezCablez.Services.Interfaces;
+using DezCablez.Web.Exceptions;
 using DezCablez.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,40 +21,23 @@ namespace DezCablez.Web.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private UserManager<User> userManager;
-        private IConfiguration _config;
-
-        public AuthenticationController(UserManager<User> userManager, IConfiguration config)
+        private IUserService _userService;
+        private IMapper _mapper;
+        public AuthenticationController(IUserService userService, IMapper mapper)
         {
-            this.userManager = userManager;
-            this._config = config;
+            this._userService = userService;
+            this._mapper = mapper;
         }
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        public async Task<ActionResult> Login([FromBody] LoginModel model)
         {
-            var user = await userManager.FindByNameAsync(model.Username);
-            if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
+            var authenticatedUser = await this._userService.AuthenticateAsync(model.Username, model.Password);
+
+            if (authenticatedUser != null)
             {
-
-                var authClaims = new[]
-                {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Role, user.UserType)
-                };
-
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtOptions:Secret"]));
-
-                var token = new JwtSecurityToken(
-                    issuer: _config["JwtOptions:Issuer"],
-                    audience: _config["JwtOptions:Audience"],
-                    expires: DateTime.Now.AddHours(3),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                    );
+                var token = this._userService.GenerateToken(authenticatedUser);
 
                 return Ok(new
                 {
@@ -60,7 +46,18 @@ namespace DezCablez.Web.Controllers
                 });
             }
 
-            return Unauthorized();
+            return BadRequest(new { message = "Incorrect username or password" });
+        }
+
+        [HttpPost]
+        [Route("register")]
+        public async Task<ActionResult> Register([FromBody]RegisterModel model)
+        {
+            var user = this._mapper.Map<User>(model);
+
+            var account = await this._userService.CreateAsync(user, model.Password);
+
+            return Ok(new { message = $"Account with username: {account.UserName} created." });
         }
     }
 }

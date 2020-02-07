@@ -13,9 +13,9 @@ namespace DezCablez.Web.Controllers
     [ApiController]
     public class StoreController : ControllerBase
     {
-        private readonly IItemsService itemsService;
+        private readonly IItemService itemsService;
 
-        public StoreController(IItemsService itemsService)
+        public StoreController(IItemService itemsService)
         {
             this.itemsService = itemsService;
         }

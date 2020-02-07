@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using DezCablez.Data;
@@ -8,12 +9,15 @@ using DezCablez.Data.Models;
 using DezCablez.Data.Shared;
 using DezCablez.Services;
 using DezCablez.Services.Interfaces;
+using DezCablez.Web.Exceptions;
 using DezCablez.Web.Models;
 using DezCablez.Web.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +28,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using AutoMapper;
 
 namespace DezCablez.Web
 {
@@ -80,7 +86,10 @@ namespace DezCablez.Web
                     services.AddCors();
                 });
 
-            services.AddTransient<IItemsService, ItemsService>();
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddTransient<IItemService, ItemService>();
+            services.AddTransient<IUserService, UserService>();
 
             services.AddAuthorization(conf =>
             {
@@ -101,6 +110,21 @@ namespace DezCablez.Web
 
 
             app.UseHttpsRedirection();
+
+            app.UseExceptionHandler(a => a.Run(async context =>
+            {
+                var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+                var exception = exceptionHandlerPathFeature.Error;
+
+                if(exception is EntityNotFoundException)
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                }
+
+                var result = JsonConvert.SerializeObject(new { message = exception.Message });
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(result);
+            }));
 
             app.UseRouting();
 
