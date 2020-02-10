@@ -14,12 +14,15 @@ namespace DezCablez.Data.Models
         {
             this.Addresses = new HashSet<Address>();
             this.Orders = new HashSet<Order>();
+            this.Avatar = new Image(ResourceLocations.DefaultAvatarLocation);
         }
 
         [Required]
         public string UserType { get; set; }
 
         public virtual ICollection<Address> Addresses { set; get; }
+
+        public Image Avatar { get; set; }
 
         public virtual ICollection<Order> Orders { set; get; }
     }

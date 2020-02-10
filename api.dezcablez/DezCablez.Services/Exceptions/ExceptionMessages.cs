@@ -6,7 +6,14 @@ namespace DezCablez.Services.Exceptions
 {
     public static class ExceptionMessages
     {
-        public const string TakenUsernameError = "Username is already in use!";
-        public const string TakenEmailError = "User with this email already exists!";
+        /// <summary>
+        /// Generates taken error message.
+        /// </summary>
+        /// <param name="takenName">name of the not unique param</param>
+        /// <returns>(param) already exists in the database.</returns>
+        public static string TakenGenerator(string takenName)
+        {
+            return $"{takenName} already exists in the database.";
+        }
     }
 }

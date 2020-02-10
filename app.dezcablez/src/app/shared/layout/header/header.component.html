@@ -1,25 +1,29 @@
-<div class="nav">
-    <div class="logo">
-      <img src="assets/img/logo.png" alt="logo" width="130"/>
-    </div>
-    <div class="nav-items">
-      <ul id='menu'>
-        <li>
-           <a routerLink="">Home</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-my">
+  <div class="container">
+    <a class="navbar-brand " routerLink="/">
+      <img src="/assets/img/logo.png" width="200" height="100" class="d-inline-block align-top" alt="logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link nl-my" routerLink="/">Home</a>
         </li>
-        <li>
-            <a routerLink="/store">Store</a>
-        </li>
-        <li>Products</li>
-        <li>Clients</li>
-      </ul>
-      <ul id='auth'>
-          <li>
-              <a routerLink="/login">Login</a>
-          </li>
-          <li>
-            <a routerLink="/register">Register</a>
+        <li class="nav-item">
+          <a class="nav-link nl-my" routerLink="/store">Store</a>
         </li>
       </ul>
+      <ul  class="navbar-nav ml-auto" *ngIf="!isLogged">
+        <li class="nav-item">
+          <a class="nav-link nl-my" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nl-my" routerLink="/register">Register</a>
+        </li>
+      </ul>
     </div>
-</div>
+  </div>
+</nav>

@@ -60,10 +60,32 @@ namespace DezCablez.Data.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("DezCablez.Data.Models.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImgURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ItemId")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Image");
+                });
+
             modelBuilder.Entity("DezCablez.Data.Models.Item", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -111,6 +133,11 @@ namespace DezCablez.Data.Migrations
 
                     b.Property<string>("Extra7Value")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(22, 2)");
@@ -166,7 +193,7 @@ namespace DezCablez.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ItemId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(22, 2)");
@@ -187,6 +214,9 @@ namespace DezCablez.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AvatarId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -238,6 +268,8 @@ namespace DezCablez.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AvatarId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -390,6 +422,13 @@ namespace DezCablez.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DezCablez.Data.Models.Image", b =>
+                {
+                    b.HasOne("DezCablez.Data.Models.Item", null)
+                        .WithMany("Pictures")
+                        .HasForeignKey("ItemId");
+                });
+
             modelBuilder.Entity("DezCablez.Data.Models.Order", b =>
                 {
                     b.HasOne("DezCablez.Data.Models.User", "User")
@@ -412,6 +451,13 @@ namespace DezCablez.Data.Migrations
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DezCablez.Data.Models.User", b =>
+                {
+                    b.HasOne("DezCablez.Data.Models.Image", "Avatar")
+                        .WithMany()
+                        .HasForeignKey("AvatarId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

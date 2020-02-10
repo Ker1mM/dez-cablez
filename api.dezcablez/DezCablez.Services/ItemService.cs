@@ -7,6 +7,8 @@ using DezCablez.Services.Interfaces;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using DezCablez.Web.Exceptions;
+using DezCablez.Services.Exceptions;
 
 namespace DezCablez.Services
 {
@@ -17,6 +19,19 @@ namespace DezCablez.Services
         public ItemService(DezCablezDBContext context)
         {
             this.context = context;
+        }
+
+        public async Task<Item> CreateItemAsync(Item item)
+        {
+            if (await this.context.Items.AnyAsync(it => it.Id == item.Id))
+            {
+                throw new TakenException(ExceptionMessages.TakenGenerator("Id"), "Id");
+            }
+
+            await this.context.Items.AddAsync(item);
+            await this.context.SaveChangesAsync();
+
+            return item;
         }
 
         public async Task<IEnumerable<Item>> GetAllItemsAsync()

@@ -11,11 +11,16 @@ namespace DezCablez.Data.Models
     {
         public Item()
         {
-            this.Id = Guid.NewGuid().ToString();
+            this.Pictures = new HashSet<Image>();
         }
 
         [Key]
+        [StringLength(50, MinimumLength = 10)]
         public string Id { get; set; }
+
+        [Required]
+        [StringLength(100, MinimumLength = 3)]
+        public string Name { get; set; }
 
         [Required]
         [StringLength(220, MinimumLength = 10)]
@@ -29,6 +34,8 @@ namespace DezCablez.Data.Models
 
         [Range(0, 10000)]
         public int Stock { get; set; }
+
+        public virtual ICollection<Image> Pictures { get; set; }
 
         public string Extra1Name { get; set; }
         public string Extra1Value { get; set; }

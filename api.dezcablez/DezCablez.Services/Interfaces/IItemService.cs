@@ -8,8 +8,10 @@ namespace DezCablez.Services.Interfaces
 {
     public interface IItemService
     {
-       Task<IEnumerable<Item>> GetAllItemsAsync();
+        Task<IEnumerable<Item>> GetAllItemsAsync();
 
-       Task<IEnumerable<Item>> GetItemWithIdAsync(string id);
+        Task<IEnumerable<Item>> GetItemWithIdAsync(string id);
+
+        Task<Item> CreateItemAsync(Item item);
     }
 }

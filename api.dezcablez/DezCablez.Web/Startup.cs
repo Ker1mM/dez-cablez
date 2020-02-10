@@ -108,6 +108,7 @@ namespace DezCablez.Web
                 IdentityModelEventSource.ShowPII = true;
             }
 
+            Seeder.Initialize(app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
 
             app.UseHttpsRedirection();
 
@@ -116,7 +117,7 @@ namespace DezCablez.Web
                 var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
                 var exception = exceptionHandlerPathFeature.Error;
 
-                if(exception is EntityNotFoundException)
+                if(exception is TakenException)
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 }
