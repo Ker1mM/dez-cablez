@@ -8,6 +8,7 @@ import { ErrorModule } from './error/error.module';
 import { StoreModule } from './store/store.module';
 import { StoreRoutingModule } from './store/store-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     StoreModule,
     ErrorModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

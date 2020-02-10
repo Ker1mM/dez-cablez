@@ -7,14 +7,15 @@ namespace DezCablez.Web.Exceptions
 {
     public class EntityNotFoundException : Exception
     {
+
         public EntityNotFoundException()
         {
         }
 
-        public EntityNotFoundException(string message)
+        public EntityNotFoundException(string message, string entity)
             : base(message)
         {
-
+            base.Source = entity;
         }
     }
 }

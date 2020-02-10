@@ -42,12 +42,12 @@ namespace DezCablez.Services
         {
             if (await this.userManager.FindByNameAsync(user.UserName) != null)
             {
-                throw new EntityNotFoundException(ExceptionMessages.TakenUsernameError);
+                throw new EntityNotFoundException(ExceptionMessages.TakenUsernameError, "username");
             }
 
             if (await this.userManager.FindByEmailAsync(user.Email) != null)
             {
-                throw new EntityNotFoundException(ExceptionMessages.TakenEmailError);
+                throw new EntityNotFoundException(ExceptionMessages.TakenEmailError, "email");
             }
 
             user.SecurityStamp = Guid.NewGuid().ToString();
@@ -73,7 +73,7 @@ namespace DezCablez.Services
             var token = new JwtSecurityToken(
                 issuer: _config["JwtOptions:Issuer"],
                 audience: _config["JwtOptions:Audience"],
-                expires: DateTime.Now.AddHours(3),
+                expires: DateTime.UtcNow.AddSeconds(30),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );

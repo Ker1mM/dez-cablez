@@ -121,7 +121,8 @@ namespace DezCablez.Web
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 }
 
-                var result = JsonConvert.SerializeObject(new { message = exception.Message });
+
+                var result = JsonConvert.SerializeObject(new { message = exception.Message , source = exception.Source});
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync(result);
             }));

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms'
-import { AuthService } from '../services/auth.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,30 +10,42 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  form: FormGroup;
-  constructor(private fb : FormBuilder, private authService: AuthService) {
-    this.form = this.fb.group({
+  loginForm: FormGroup;
+  savedUsername: string;
+  submitted = false;
+  errorMessage: string;
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+    this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
-  });
+    });
   }
 
   ngOnInit() {
   }
 
-  login() {
-    const val = this.form.value;
+  get f() { return this.loginForm.controls; } //easy access to fields
 
-    if (val.username && val.password) {
-        this.authService.login(val.username, val.password)
-            .subscribe(
-                (data) => {
-                  console.log(data);
-                    console.log("User is logged in");
-                   // this.router.navigateByUrl('/');
-                }
-            );
+  handleSubmit() {
+    this.submitted = true;
+
+    console.log('click')
+    if (this.loginForm.invalid) {
+      return;
     }
 
-}
+    this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
+      .subscribe(
+        (data) => {
+          this.router.navigate(['']);
+        }, error => {
+          this.savedUsername = this.loginForm.value.username;
+          if (error.status === 400) {
+            this.f.username.setErrors({ unauthorized: true });
+          }
+          this.f.password.reset();
+          this.submitted = false;
+        }
+      );
+  }
 }

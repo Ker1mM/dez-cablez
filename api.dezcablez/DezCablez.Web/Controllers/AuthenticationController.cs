@@ -39,10 +39,12 @@ namespace DezCablez.Web.Controllers
             {
                 var token = this._userService.GenerateToken(authenticatedUser);
 
+                var expirationDate = token.ValidTo.Subtract(DateTime.UtcNow);
+
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    expiresIn = Math.Floor(expirationDate.TotalSeconds)
                 });
             }
 
