@@ -1,3 +1,19 @@
-<div class="container">
-    store works!
+<div class="row ">
+    <div *ngFor="let item of items" class="col-3" >
+        <div class="item-box mx-auto" routerLink="/item/{{item.id}}">
+            <img src="{{item.thumbnail}}" alt="{{item.name}}" class="img-thumbnail">
+            <div class="name-tag my-auto"><span>
+                    {{item.name}}
+                </span>
+            </div>
+            <div class="info-box">
+                <div class="price-box float-right my-auto">
+                    <span>{{this.getPrice(item.price)}}</span>
+                    <span>,</span>
+                    <span>{{getPrecision(item.price)}}</span>
+                </div>
+                <div class="btn btn-primary">Details</div>
+            </div>
+        </div>
+    </div>
 </div>

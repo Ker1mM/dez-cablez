@@ -2,6 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { StoreComponent } from './store/store.component';
 import { AddItemComponent } from './item/add-item/add-item.component';
 import { DetailsComponent } from './item/details/details.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,11 @@ const routes: Routes = [
                 path: '',
                 pathMatch: 'full',
                 component: StoreComponent
+            },
+            {
+                path: 'cart',
+                pathMatch: 'full',
+                component: ShoppingCartComponent
             }
         ],
     },

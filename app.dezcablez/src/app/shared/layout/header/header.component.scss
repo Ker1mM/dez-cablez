@@ -11,13 +11,6 @@
     margin-bottom: 0px;
   }
 
-// .nav{
-//   clear:both;
-//   overflow:auto;
-//   background-color: rgb(208,29,155);
-//   margin: 0;
-// }
-
 .bg-my {
   background-color: rgb(208,29,155);
 }
@@ -30,4 +23,27 @@ font-size: 30px;
 .nl-my:hover {
   color: rgb(45,43,85) !important;
   text-shadow: 2px 2px 10px salmon !important;
+}
+
+.count-box{
+  position: relative;
+  left: 75px;
+  bottom: 15px;
+  font-size: 20px;
+  font-weight: 700;
+  background-color: tomato;
+  z-index: 20;
+  border-radius: 50px;
+  width: 40px;
+  padding: 5px;
+}
+
+.cart-box {
+  cursor: pointer;
+  outline: none;
+}
+
+.cart-box:hover {
+color: white;
+text-shadow: 10px 10px 20px 20px gold;
 }

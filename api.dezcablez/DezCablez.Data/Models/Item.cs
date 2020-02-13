@@ -35,6 +35,8 @@ namespace DezCablez.Data.Models
         [Range(0, 10000)]
         public int Stock { get; set; }
 
+        public string Thumbnail { get; set; }
+
         public virtual ICollection<Image> Pictures { get; set; }
 
         public string Extra1Name { get; set; }

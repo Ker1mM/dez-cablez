@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/shared/helpers/must-match.validator';
 import { AuthService } from '../../services/auth.service';
-import { error } from 'protractor';
 import { Router } from '@angular/router';
 
 @Component({

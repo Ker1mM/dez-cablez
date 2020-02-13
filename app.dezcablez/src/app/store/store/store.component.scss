@@ -1,0 +1,24 @@
+.item-box{
+    cursor: pointer;
+    height: 325px;
+    width: 200px;
+    padding-top: 20px;
+}
+
+.name-tag {
+    font-size: 15px;
+    font-weight: 400;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 50px;
+    overflow: hidden;
+}
+
+.info-box {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.price-box {
+    font-size: 25px;
+}

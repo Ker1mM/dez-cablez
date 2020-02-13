@@ -25,7 +25,7 @@ namespace DezCablez.Services
         {
             if (await this.context.Items.AnyAsync(it => it.Id == item.Id))
             {
-                throw new TakenException(ExceptionMessages.TakenGenerator("Id"), "Id");
+                throw new TakenException(ExceptionMessages.TakenGenerator("Id"), "id");
             }
 
             await this.context.Items.AddAsync(item);
@@ -41,9 +41,14 @@ namespace DezCablez.Services
             return items;
         }
 
-        public async Task<IEnumerable<Item>> GetItemWithIdAsync(string id)
+        public async Task<Item> GetItemWithIdAsync(string id)
         {
-            var item = await context.Items.Where(x => x.Id == id).ToListAsync();
+            var item = await context.Items.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (item == null)
+            {
+                throw new NotFoundException(ExceptionMessages.NotFoundGenerator("Item", id));
+            }
 
             return item;
         }

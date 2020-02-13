@@ -30,6 +30,7 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using AutoMapper;
+using DezCablez.Services.Exceptions;
 
 namespace DezCablez.Web
 {
@@ -90,6 +91,7 @@ namespace DezCablez.Web
 
             services.AddTransient<IItemService, ItemService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IImageService, ImageService>();
 
             services.AddAuthorization(conf =>
             {
@@ -117,13 +119,17 @@ namespace DezCablez.Web
                 var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
                 var exception = exceptionHandlerPathFeature.Error;
 
-                if(exception is TakenException)
+                if (exception is TakenException)
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 }
+                else if (exception is NotFoundException)
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                }
 
 
-                var result = JsonConvert.SerializeObject(new { message = exception.Message , source = exception.Source});
+                var result = JsonConvert.SerializeObject(new { message = exception.Message, source = exception.Source });
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync(result);
             }));

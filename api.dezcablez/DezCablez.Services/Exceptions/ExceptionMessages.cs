@@ -6,6 +6,7 @@ namespace DezCablez.Services.Exceptions
 {
     public static class ExceptionMessages
     {
+
         /// <summary>
         /// Generates taken error message.
         /// </summary>
@@ -14,6 +15,11 @@ namespace DezCablez.Services.Exceptions
         public static string TakenGenerator(string takenName)
         {
             return $"{takenName} already exists in the database.";
+        }
+
+        public static string NotFoundGenerator(string entityName, string id)
+        {
+            return $"{entityName} with the ID: {id} does not exist in the database";
         }
     }
 }

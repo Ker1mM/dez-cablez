@@ -25,15 +25,25 @@ namespace DezCablez.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = Policies.Admin)]
+        // [Authorize(Policy = Policies.Admin)]
         [Route("add")]
         public async Task<ActionResult> AddItem([FromBody] ItemModel model)
         {
             var item = this._mapper.Map<Item>(model);
 
-            await this._itemService.CreateItemAsync(item);
+            item = await this._itemService.CreateItemAsync(item);
 
-            return Ok(new { message = "Item added successfully." });
+            return Ok(new { message = "Item added successfully.", id = item.Id });
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<ItemModel>> GetItem([FromRoute]string id)
+        {
+            var dbItem = await this._itemService.GetItemWithIdAsync(id);
+            var item = this._mapper.Map<ItemModel>(dbItem);
+
+            return Ok(item);
         }
     }
 }
