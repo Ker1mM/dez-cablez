@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,12 @@ export class LoginComponent implements OnInit {
   savedUsername: string;
   submitted = false;
   errorMessage: string;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  return: string = '';
+
+  constructor(private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -22,6 +28,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams
+      .subscribe(params => this.return = params['return'] || '/');
   }
 
   get f() { return this.loginForm.controls; } //easy access to fields
@@ -37,7 +45,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
       .subscribe(
         (data) => {
-          this.router.navigate(['']);
+          this.router.navigateByUrl(this.return);
         }, error => {
           this.savedUsername = this.loginForm.value.username;
           if (error.status === 400) {

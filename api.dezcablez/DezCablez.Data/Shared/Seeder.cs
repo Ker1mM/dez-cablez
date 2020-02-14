@@ -22,7 +22,8 @@ namespace DezCablez.Data.Shared
                     Email = "user@gmail.com",
                     SecurityStamp = Guid.NewGuid().ToString(),
                     UserName = "User",
-                    UserType = "User"
+                    UserType = "User",
+                    Avatar = ResourceLocations.DefaultAvatarLocation,
                 };
 
                 User userAdmin = new User()
@@ -30,7 +31,8 @@ namespace DezCablez.Data.Shared
                     Email = "Admin@gmail.com",
                     SecurityStamp = Guid.NewGuid().ToString(),
                     UserName = "Admin",
-                    UserType = "Admin"
+                    UserType = "Admin",
+                    Avatar = ResourceLocations.DefaultAvatarLocation,
                 };
 
                 userManager.CreateAsync(userUser, "123123");

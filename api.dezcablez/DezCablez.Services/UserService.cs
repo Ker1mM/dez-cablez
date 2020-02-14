@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,6 +57,16 @@ namespace DezCablez.Services
             await this.userManager.CreateAsync(user, password);
 
             return user;
+        }
+
+        public string GetUserClaimFromJWT(string authToken, string claimType)
+        {
+            var  rawToken = authToken.Split(' ')[1];
+
+            var token = new JwtSecurityTokenHandler().ReadJwtToken(rawToken);
+            var claim = token.Claims.First(c => c.Type == claimType).Value;
+
+            return claim;
         }
 
         public JwtSecurityToken GenerateToken(User user)

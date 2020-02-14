@@ -44,7 +44,8 @@ namespace DezCablez.Web.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiresIn = Math.Floor(expirationDate.TotalSeconds)
+                    expiresIn = Math.Floor(expirationDate.TotalSeconds),
+                    username = authenticatedUser.UserName,
                 });
             }
 

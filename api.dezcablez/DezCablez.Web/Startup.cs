@@ -1,36 +1,28 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 using DezCablez.Data;
 using DezCablez.Data.Models;
 using DezCablez.Data.Shared;
 using DezCablez.Services;
+using DezCablez.Services.Exceptions;
 using DezCablez.Services.Interfaces;
 using DezCablez.Web.Exceptions;
 using DezCablez.Web.Models;
-using DezCablez.Web.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using AutoMapper;
-using DezCablez.Services.Exceptions;
+using System;
+using System.Net;
+using System.Text;
 
 namespace DezCablez.Web
 {
@@ -92,6 +84,7 @@ namespace DezCablez.Web
             services.AddTransient<IItemService, ItemService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IOrderService, OrderService>();
 
             services.AddAuthorization(conf =>
             {
@@ -134,14 +127,15 @@ namespace DezCablez.Web
                 await context.Response.WriteAsync(result);
             }));
 
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
             app.UseRouting();
 
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>
             {

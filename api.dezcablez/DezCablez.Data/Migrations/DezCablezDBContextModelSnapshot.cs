@@ -42,6 +42,10 @@ namespace DezCablez.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Nickname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -219,8 +223,11 @@ namespace DezCablez.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AvatarId")
+                    b.Property<int?>("ActiveAddressId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -272,7 +279,7 @@ namespace DezCablez.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AvatarId");
+                    b.HasIndex("ActiveAddressId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -419,7 +426,7 @@ namespace DezCablez.Data.Migrations
             modelBuilder.Entity("DezCablez.Data.Models.Address", b =>
                 {
                     b.HasOne("DezCablez.Data.Models.User", "User")
-                        .WithMany("Addresses")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -435,7 +442,7 @@ namespace DezCablez.Data.Migrations
             modelBuilder.Entity("DezCablez.Data.Models.Order", b =>
                 {
                     b.HasOne("DezCablez.Data.Models.User", "User")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -458,9 +465,9 @@ namespace DezCablez.Data.Migrations
 
             modelBuilder.Entity("DezCablez.Data.Models.User", b =>
                 {
-                    b.HasOne("DezCablez.Data.Models.Image", "Avatar")
+                    b.HasOne("DezCablez.Data.Models.Address", "ActiveAddress")
                         .WithMany()
-                        .HasForeignKey("AvatarId");
+                        .HasForeignKey("ActiveAddressId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

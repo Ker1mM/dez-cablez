@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { IItem } from '../interfaces/item';
 import { tap } from 'rxjs/operators';
 import { StoreService } from '../services/store.service';
+import { changeDecimalSign } from 'src/app/shared/helpers/helper-functions';
 
 @Component({
   selector: 'app-store',
@@ -28,12 +29,10 @@ export class StoreComponent implements OnInit {
 
   
   getPrice (price: number) {
-    let fixed = price.toFixed(2).toString();
-    return fixed.split('.')[0];
+    return changeDecimalSign(price).intPart;
   }
 
   getPrecision(price: number) {
-    let fixed = price.toFixed(2).toString();
-    return fixed.split('.')[1];
+    return changeDecimalSign(price).decimalPart;
   }
 }

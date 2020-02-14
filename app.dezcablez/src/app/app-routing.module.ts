@@ -4,6 +4,8 @@ import { NotFoundComponent } from './error/not-found/not-found.component';
 import { LoginComponent } from './core/auth/login/login.component';
 import { RegisterComponent } from './core/auth/register/register.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { combineAll } from 'rxjs/operators';
+import { ProfileComponent } from './core/user/profile/profile.component';
 
 
 const routes: Routes = [
@@ -29,9 +31,14 @@ const routes: Routes = [
     }
   },
   {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }
 ];
 
-export const AppRoutingModule  = RouterModule.forRoot(routes);
+export const AppRoutingModule = RouterModule.forRoot(routes);

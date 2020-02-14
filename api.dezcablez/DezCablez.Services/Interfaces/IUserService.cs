@@ -14,5 +14,7 @@ namespace DezCablez.Services.Interfaces
         Task<User> CreateAsync(User user, string password);
 
         JwtSecurityToken GenerateToken(User user);
+
+        string GetUserClaimFromJWT(string authToken, string claimType);
     }
 }

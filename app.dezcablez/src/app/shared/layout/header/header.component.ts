@@ -14,8 +14,9 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authSrvice: AuthService,
     private cookieService: CookieService,
-    private cartService: CartService) { }
+    private cartService: CartService) {
 
+  }
 
   get isLogged() { return this.authSrvice.isLoggedIn() }
 
@@ -24,6 +25,10 @@ export class HeaderComponent implements OnInit {
     this.cartService.watchStorage().subscribe(data => {
       this.cartItemsCount = this.getCartQuantity();
     });
+  }
+
+  getUsername() {
+    return localStorage.getItem('auth_username');
   }
 
   private getCartQuantity() {
