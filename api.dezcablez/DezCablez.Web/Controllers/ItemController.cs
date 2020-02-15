@@ -25,7 +25,7 @@ namespace DezCablez.Web.Controllers
         }
 
         [HttpPost]
-        // [Authorize(Policy = Policies.Admin)]
+        [Authorize] //TODO: Make admin only
         [Route("add")]
         public async Task<ActionResult> AddItem([FromBody] ItemModel model)
         {

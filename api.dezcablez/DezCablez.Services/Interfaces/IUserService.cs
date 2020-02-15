@@ -16,5 +16,13 @@ namespace DezCablez.Services.Interfaces
         JwtSecurityToken GenerateToken(User user);
 
         string GetUserClaimFromJWT(string authToken, string claimType);
+
+        Task<User> GetUserByUsernameAsync(string username);
+
+        Task<Address> CreateUserAddressAsync(Address address, string username);
+
+        Task<bool> DeleteAddressAsync(int addressId, string username);
+
+        Task<ICollection<Address>> GetAllAddressesByUserUsername(string username);
     }
 }

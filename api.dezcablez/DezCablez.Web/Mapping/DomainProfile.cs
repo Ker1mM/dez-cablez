@@ -17,6 +17,10 @@ namespace DezCablez.Web.Mapping
 
             CreateMap<Item, ItemModel>()
                 .ForMember(x => x.Images, y => y.MapFrom(src => src.Pictures.Select(x => x.ImgURL).ToArray()));
+
+            CreateMap<AddressInfoModel, Address>();
+            CreateMap<Address, AddressInfoModel>();
+            CreateMap<User, UserInfoModel>();
         }
     }
 }

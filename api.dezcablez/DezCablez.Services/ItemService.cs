@@ -47,7 +47,7 @@ namespace DezCablez.Services
 
             if (item == null)
             {
-                throw new NotFoundException(ExceptionMessages.NotFoundGenerator("Item", id));
+                throw new NotFoundException(ExceptionMessages.NotFoundGenerator("Item", id), "item");
             }
 
             return item;

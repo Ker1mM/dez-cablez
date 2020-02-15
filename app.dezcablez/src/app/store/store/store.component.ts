@@ -5,6 +5,7 @@ import { IItem } from '../interfaces/item';
 import { tap } from 'rxjs/operators';
 import { StoreService } from '../services/store.service';
 import { changeDecimalSign } from 'src/app/shared/helpers/helper-functions';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-store',
@@ -15,16 +16,10 @@ export class StoreComponent implements OnInit {
 
   constructor(private storeService: StoreService) { }
 
-  items: IItem[];
+  items$: Observable<IItem[]>;
 
   ngOnInit() {
-    this.storeService.loadAllItems().subscribe(
-      (data: IItem[]) => {
-        this.items = data;
-      },
-      (error) => {
-
-      })
+   this.items$ = this.storeService.loadAllItems();
   }
 
   

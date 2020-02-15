@@ -17,9 +17,9 @@ namespace DezCablez.Services.Exceptions
             return $"{takenName} already exists in the database.";
         }
 
-        public static string NotFoundGenerator(string entityName, string id)
+        public static string NotFoundGenerator(string entityName, string data)
         {
-            return $"{entityName} with the ID: {id} does not exist in the database";
+            return $"{entityName} with the ID or Username: {data} does not exist in the database";
         }
     }
 }

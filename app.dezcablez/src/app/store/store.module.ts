@@ -7,6 +7,7 @@ import { DetailsComponent } from './item/details/details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { FormatPricePipe } from './pipes/format-price.pipe';
 
 
 
@@ -16,7 +17,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     AddItemComponent,
     DetailsComponent,
     ShoppingCartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    FormatPricePipe
   ],
   imports: [
     CommonModule,

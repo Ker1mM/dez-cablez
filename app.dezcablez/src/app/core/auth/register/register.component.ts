@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/shared/helpers/must-match.validator';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   usernameIsTaken = false;
   passwordIsTaken = false;
+  private subscription: Subscription;
 
   registerForm = this.fb.group({
     username: ['', Validators.required],
@@ -39,7 +41,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.authService.register(
+    this.subscription = this.authService.register(
       this.registerForm.value.username,
       this.registerForm.value.email,
       this.registerForm.value.password
@@ -52,5 +54,10 @@ export class RegisterComponent implements OnInit {
         this.f[source].setErrors({taken: true});
       });
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 
 }
