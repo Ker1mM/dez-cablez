@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="order-t">
+        Order content:
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-9">
+            <div class="row pt-2" *ngFor="let item of cart">
+                <div class="col-6 overflow-hidden">
+                    {{item.name}}
+                </div>
+                <div class="col-2">{{formatPrice(item.price)}}</div>
+                <div class="col-2">{{item.quantity}}</div>
+                <div class="col-2">{{formatPrice(item.quantity*item.price)}}</div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="confirm-box">
+                <span class="mx-auto">Total cost:</span>
+                <div class="text-right">{{formatPrice(totalPrice)}}</div>
+                <hr>
+                <div class="text-center">
+                    <button (click)="order()" class="btn btn-confirm">Confirm Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

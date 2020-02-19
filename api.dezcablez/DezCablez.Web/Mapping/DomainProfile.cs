@@ -20,7 +20,18 @@ namespace DezCablez.Web.Mapping
 
             CreateMap<AddressInfoModel, Address>();
             CreateMap<Address, AddressInfoModel>();
+
             CreateMap<User, UserInfoModel>();
+
+            CreateMap<OrderItemModel, OrderItem>();
+            CreateMap<OrderItem, OrderItemModel>()
+                .ForMember(x => x.Name, y => y.MapFrom(src => src.Item.Name));
+
+            CreateMap<OrderInfoModel, Order>();
+            CreateMap<ItemImageDTO, Image>();
+
+            CreateMap<Order, OrderInfoModel>()
+                .ForMember(x => x.Date, y => y.MapFrom(src => src.OrderTime.ToString("dd-MM-yyyy")));
         }
     }
 }

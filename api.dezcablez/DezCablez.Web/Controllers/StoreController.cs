@@ -13,17 +13,17 @@ namespace DezCablez.Web.Controllers
     [ApiController]
     public class StoreController : ControllerBase
     {
-        private readonly IItemService itemsService;
+        private readonly IItemService _itemsService;
 
         public StoreController(IItemService itemsService)
         {
-            this.itemsService = itemsService;
+            this._itemsService = itemsService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Item>>> GetStore()
         {
-            var allItems = await this.itemsService.GetAllItemsAsync();
+            var allItems = await this._itemsService.GetAllItemsAsync();
 
             return Ok(allItems);
         }

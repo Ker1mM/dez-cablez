@@ -85,6 +85,7 @@ namespace DezCablez.Web
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IAddressService, AddressService>();
 
             services.AddAuthorization(conf =>
             {

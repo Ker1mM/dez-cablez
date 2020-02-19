@@ -21,6 +21,25 @@ namespace DezCablez.Services
             this.context = context;
         }
 
+        public async Task<Item> AddImageToItemAsync(Item item, Image image)
+        {
+            item.Pictures.Add(image);
+
+            await this.context.SaveChangesAsync();
+
+            return item;
+        }
+
+        public async Task<Item> ChangeThumbnailAsync(string itemId, string link)
+        {
+            Item item = await this.GetItemWithIdAsync(itemId);
+
+            item.Thumbnail = link;
+            await this.context.SaveChangesAsync();
+
+            return item;
+        }
+
         public async Task<Item> CreateItemAsync(Item item)
         {
             if (await this.context.Items.AnyAsync(it => it.Id == item.Id))
@@ -40,6 +59,7 @@ namespace DezCablez.Services
 
             return items;
         }
+
 
         public async Task<Item> GetItemWithIdAsync(string id)
         {

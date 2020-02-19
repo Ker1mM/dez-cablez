@@ -1,0 +1,147 @@
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 title-n">
+                Addresse Options:
+            </div>
+            <div class="col-6 text-right">
+                <div (click)="toggle()" class="btn btn-primary">{{addFormVisible ? 'Hide' : 'Add new address'}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="container" *ngIf="addFormVisible">
+        <hr>
+        <form [formGroup]="addForm" (ngSubmit)="handleSubmit()">
+            <fieldset class="border">
+                <legend class="w-auto ml-2">Add new address</legend>
+                <div class="row m-2">
+                    <div class="col-6">
+                        <label class="pl-2" for="nickname">Give the address a nickname:</label>
+                        <input class="form-control" type="text" id="nickname" name="nickname"
+                            formControlName="nickname">
+                        <div class="invalid-feedback x-small " *ngIf="f.nickname.errors && submitted">
+                            <div *ngIf="f.nickname.errors.required">Nickname is required</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label class="pl-2" for="country">Select destination country:</label>
+                        <select class="form-control" formControlName="country" name="country" id="country">
+                            <option value="" disabled>Select destination:</option>
+                            <option *ngFor="let country of countries" [ngValue]="country">{{country}}</option>
+                        </select>
+                        <div class="invalid-feedback x-small " *ngIf="f.country.errors && submitted">
+                            <div *ngIf="f.country.errors.required">Country is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-4">
+                        <label class="pl-2" for="city">City:</label>
+                        <input class="form-control" type="text" id="city" name="city" formControlName="city">
+                        <div class="invalid-feedback x-small " *ngIf="f.city.errors && submitted">
+                            <div *ngIf="f.city.errors.required">City is required</div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label class="pl-2" for="postalCode">Post Code:</label>
+                        <input class="form-control" type="number" id="postalCode" name="postalCode"
+                            formControlName="postalCode">
+                        <div class="invalid-feedback x-small " *ngIf="f.postalCode.errors && submitted">
+                            <div *ngIf="f.postalCode.errors.required">Post Code is required</div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label class="pl-2" for="phone">Contact number:</label>
+                        <input class="form-control" type="text" id="phone" name="phone" formControlName="phone">
+                        <div class="invalid-feedback x-small " *ngIf="f.phone.errors && submitted">
+                            <div *ngIf="f.phone.errors.required">Contact number is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-6">
+                        <label class="pl-2" for="address1">Address:</label>
+                        <input class="form-control" type="text" id="address1" name="address1"
+                            formControlName="address1">
+                        <div class="invalid-feedback x-small " *ngIf="f.address1.errors && submitted">
+                            <div *ngIf="f.address1.errors.required">Address is required</div>
+                            <div *ngIf="f.address1.errors.minlength">Address is too short</div>
+                            <div *ngIf="f.address1.errors.maxlength">Address is too long</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label class="pl-2" for="address2">Extra information:</label>
+                        <input class="form-control" type="text" id="address2" name="address2"
+                            formControlName="address2">
+                        <div class="invalid-feedback x-small " *ngIf="f.address2.errors && submitted">
+                            <div *ngIf="f.address2.errors.minlength">Address is too short</div>
+                            <div *ngIf="f.address2.errors.maxlength">Address is too long</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m-2 text-center py-3">
+                    <button class="btn btn-warning" type="submit">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+        <hr>
+    </div>
+    <div class="container py-2">
+        <select [(ngModel)]="selectedAddressId" class="form-control" name="selectedAddress" id="selectedAddress">
+            <option value="0" disabled>Saved Addresses</option>
+            <option *ngFor="let address of addresses" [ngValue]="address.id">{{address.nickname}}</option>
+        </select>
+        <div *ngIf="(addresses | firstordefault:'id':selectedAddressId) as current">
+            <fieldset class="border mt-4 p-2">
+                <div class="row">
+                    <div class="col-6 t-item">
+                        Country
+                    </div>
+                    <div class="col-6 t-value">
+                        {{current.country}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 t-item">
+                        City
+                    </div>
+                    <div class="col-6 t-value">
+                        {{current.city}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 t-item">
+                        Post Code
+                    </div>
+                    <div class="col-6 t-value">
+                        {{current.postalCode}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 t-item">
+                        Address
+                    </div>
+                    <div class="col-6 t-value">
+                        {{current.address1}}
+                    </div>
+                </div>
+                <div class="row" *ngIf="current.address2">
+                    <div class="col-6 t-item">
+                        Extra Information
+                    </div>
+                    <div class="col-6 t-value">
+                        {{current.address2}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 t-item">
+                        Number
+                    </div>
+                    <div class="col-6 t-value">
+                        {{current.phone}}
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>

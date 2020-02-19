@@ -51,12 +51,14 @@ export class RegisterComponent implements OnInit {
       },
       (error) => {
         let source = error.error.source.toLowerCase();
-        this.f[source].setErrors({taken: true});
+        this.f[source].setErrors({ taken: true });
       });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 

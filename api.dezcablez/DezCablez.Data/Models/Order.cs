@@ -13,9 +13,7 @@ namespace DezCablez.Data.Models
         public Order()
         {
             this.OrderTime = DateTime.UtcNow;
-            this.Status = OrderStatus.Received;
             this.OrderItems = new HashSet<OrderItem>();
-            this.Price = this.OrderItems.Sum(x => x.Price);
         }
 
         public int Id { get; set; }
@@ -37,6 +35,7 @@ namespace DezCablez.Data.Models
 
         [Column(TypeName = "decimal(22, 2)")]
         [Range(typeof(decimal), "0", "79228162514264337593543950335")]
+
         public decimal Price { get; set; }
 
         public ICollection<OrderItem> OrderItems { get; set; }

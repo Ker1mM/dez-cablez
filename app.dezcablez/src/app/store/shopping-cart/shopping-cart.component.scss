@@ -1,0 +1,48 @@
+.preview {
+    height: 100px;
+    width: 100px;
+}
+
+.table-top {
+    background-color: grey;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.cart-t {
+    font-size: 30px;
+    font-weight: 600;
+    padding-top: 25px;
+    padding-bottom: 5px;
+
+}
+
+.btn-order{
+    border-radius: 0px;
+    background-color: tomato;
+    font-weight: 500;
+}
+
+.checkout {
+    border-radius: 0px; 
+    border: solid tomato 2px;
+    width: 300px;
+
+}
+
+.checkout:hover {
+    color: tomato;
+    background-color: snow;
+    box-shadow: 0px 0px 5px 5px tomato;
+}
+
+.btn-order:hover {
+    color: snow;
+    box-shadow: 0px 0px 5px 5px tomato;
+}
+
+.price-tag{
+font-size: 20px;
+font-weight: 700;
+text-align: center;
+}

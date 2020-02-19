@@ -1,0 +1,29 @@
+<div class="container pb-5">
+    <div class="container cart-t">Your Shopping cart</div>
+    <div class="row table-top">
+        <div class="col-2 text-center">Item</div>
+        <div class="col-4">Name</div>
+        <div class="col-2">PpU</div>
+        <div class="col-2">Quantity</div>
+        <div class="col-2">Price</div>
+    </div>
+    <div *ngIf="cart.length > 0">
+        <div *ngFor="let item of cart">
+            <div class="row pt-2 ">
+                <div class="col-2 text-center my-auto"><img src="{{item.thumbnail}}"
+                        class="img-thumbnail preview">
+                </div>
+                <div class="col-4 overflow-hidden my-auto">{{item.name}}</div>
+                <div class="col-2 my-auto">{{formatPrice(item.price)}}</div>
+                <div class="col-2 my-auto">{{item.quantity}}</div>
+                <div class="col-2 my-auto">{{formatPrice(item.quantity*item.price)}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row py-4" *ngIf="cart.length > 0">
+        <div class="checkout ml-auto">
+            <span class="mx-3 price-tag">Total price: {{totalPrice}}</span>
+        </div>
+        <div routerLink="/checkout" class="btn btn-order">Order</div>
+    </div>
+</div>

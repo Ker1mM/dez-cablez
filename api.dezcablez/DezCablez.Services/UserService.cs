@@ -64,44 +64,6 @@ namespace DezCablez.Services
             return user;
         }
 
-        public async Task<bool> DeleteAddressAsync(int addressId, string username)
-        {
-            var user = await this.GetUserByUsernameAsync(username);
-            if (user.ActiveAddressId == addressId)
-            {
-                user.ActiveAddressId = null;
-            }
-            var address = await this.context.Addresses.FirstOrDefaultAsync(x => x.Id == addressId && x.UserId == user.Id);
-
-            if (address == null)
-            {
-                throw new NotFoundException(ExceptionMessages.NotFoundGenerator("Address", addressId.ToString()), "address");
-            }
-
-            this.context.Addresses.Remove(address);
-            await this.context.SaveChangesAsync();
-
-            return true;
-        }
-
-        public async Task<Address> CreateUserAddressAsync(Address address, string username)
-        {
-            var user = await this.GetUserByUsernameAsync(username);
-            address.UserId = user.Id;
-
-            if (user.ActiveAddressId == null)
-            {
-                user.ActiveAddress = address;
-            }
-            else
-            {
-                await this.context.Addresses.AddAsync(address);
-            }
-
-            await this.context.SaveChangesAsync();
-
-            return address;
-        }
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
@@ -123,14 +85,6 @@ namespace DezCablez.Services
             var claim = token.Claims.First(c => c.Type == claimType).Value;
 
             return claim;
-        }
-
-        public async Task<ICollection<Address>> GetAllAddressesByUserUsername(string username)
-        {
-            var user = await this.GetUserByUsernameAsync(username);
-            var addresses = await this.context.Addresses.Where(a => a.UserId == user.Id).ToListAsync();
-
-            return addresses;
         }
 
         public JwtSecurityToken GenerateToken(User user)

@@ -76,6 +76,7 @@ namespace DezCablez.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ItemId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
@@ -196,21 +197,29 @@ namespace DezCablez.Data.Migrations
 
             modelBuilder.Entity("DezCablez.Data.Models.OrderItem", b =>
                 {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ItemId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(22, 2)");
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId", "ItemId");
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(22, 2)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("ItemId");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
                 });
@@ -434,9 +443,11 @@ namespace DezCablez.Data.Migrations
 
             modelBuilder.Entity("DezCablez.Data.Models.Image", b =>
                 {
-                    b.HasOne("DezCablez.Data.Models.Item", null)
+                    b.HasOne("DezCablez.Data.Models.Item", "Item")
                         .WithMany("Pictures")
-                        .HasForeignKey("ItemId");
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DezCablez.Data.Models.Order", b =>

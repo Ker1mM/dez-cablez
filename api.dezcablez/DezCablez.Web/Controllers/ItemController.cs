@@ -18,10 +18,12 @@ namespace DezCablez.Web.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IItemService _itemService;
-        public ItemController(IItemService itemService, IMapper mapper)
+        private readonly IImageService _imageService;
+        public ItemController(IItemService itemService, IMapper mapper, IImageService imageService)
         {
             this._mapper = mapper;
             this._itemService = itemService;
+            this._imageService = imageService;
         }
 
         [HttpPost]
@@ -44,6 +46,16 @@ namespace DezCablez.Web.Controllers
             var item = this._mapper.Map<ItemModel>(dbItem);
 
             return Ok(item);
+        }
+
+        [HttpPost]
+        [Route("image/change")]
+
+        public async Task<IActionResult> ChangeThumbnail([FromBody]ItemImageDTO model)
+        {
+            await this._itemService.ChangeThumbnailAsync(model.ItemId, model.Link);
+
+            return Ok(new { message = "Item thumbnail changed successfully.", id = model.ItemId });
         }
     }
 }

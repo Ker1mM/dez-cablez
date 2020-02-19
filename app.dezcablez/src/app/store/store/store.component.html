@@ -1,7 +1,7 @@
 <div class="row ">
     <div *ngFor="let item of (items$ | async)" class="col-3" >
         <div class="item-box mx-auto" routerLink="/item/{{item.id}}">
-            <img src="{{item.thumbnail}}" alt="{{item.name}}" class="img-thumbnail">
+            <img height="200" width="200" src="{{item.thumbnail}}" alt="{{item.name}}" >
             <div class="name-tag my-auto"><span>
                     {{item.name}}
                 </span>

@@ -13,5 +13,10 @@ namespace DezCablez.Services.Interfaces
         Task<Item> GetItemWithIdAsync(string id);
 
         Task<Item> CreateItemAsync(Item item);
+
+        Task<Item> AddImageToItemAsync(Item item, Image image);
+
+
+        Task<Item> ChangeThumbnailAsync(string itemId, string link);
     }
 }

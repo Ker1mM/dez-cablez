@@ -23,8 +23,6 @@ namespace DezCablez.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<OrderItem>()
-            .HasKey(oi => new { oi.OrderId, oi.ItemId });
 
             base.OnModelCreating(builder);
         }

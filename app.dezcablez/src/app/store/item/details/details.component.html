@@ -1,0 +1,77 @@
+<div *ngIf="!item">
+    Loading....
+</div>
+<div *ngIf="item">
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-6">
+                <img src="{{item.thumbnail}}" class="img-fluid" alt="{{item.id}}" height="400px" width="500px">
+            </div>
+            <div class="col-4">
+                <div class="item-name">
+                    {{item.name}}
+                </div>
+                <hr>
+                <div class="pb-3">
+                    {{item.description}}
+                </div>
+                <table class="table" *ngIf="item.extra1Name">
+                    <tbody>
+                        <tr *ngIf="item.extra1Name">
+                            <th scope="row">{{item.extra1Name}}:</th>
+                            <td>{{item.extra1Value}}</td>
+                        </tr>
+                        <tr *ngIf="item.extra2Name">
+                            <th scope="row">{{item.extra2Name}}:</th>
+                            <td>{{item.extra2Value}}</td>
+                        </tr>
+                        <tr *ngIf="item.extra3Name">
+                            <th scope="row">{{item.extra3Name}}:</th>
+                            <td>{{item.extra3Value}}</td>
+                        </tr>
+                        <tr *ngIf="item.extra4Name">
+                            <th scope="row">{{item.extra4Name}}:</th>
+                            <td>{{item.extra4Value}}</td>
+                        </tr>
+                        <tr *ngIf="item.extra5Name">
+                            <th scope="row">{{item.extra5Name}}:</th>
+                            <td>{{item.extra5Value}}</td>
+                        </tr>
+                        <tr *ngIf="item.extra6Name">
+                            <th scope="row">{{item.extra6Name}}:</th>
+                            <td>{{item.extra6Value}}</td>
+                        </tr>
+                        <tr *ngIf="item.extra7Name">
+                            <th scope="row">{{item.extra7Name}}:</th>
+                            <td>{{item.extra7Value}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-2">
+                <div class="price-box">
+                    <div class="price-tag">
+                        <span class="price">{{price}}</span>
+                        <span class="precision">,{{precision}}</span>
+                        <hr>
+                    </div>
+                    <div class="text-center" >
+                        <div *ngIf="item.stock > 0" (click)="buy()" class="btn btn-buy">BUY</div>
+                        <div *ngIf="item.stock <= 0" class="btn btn-buy">Out of Stock</div>
+                    </div>
+                    <div class="text-center">
+                        <span>Available: {{item.stock}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3 m-2" *ngIf="isLogged">
+            <div class="col-4 my-auto">
+                <input #imageInput type="file" (change)="imageInputChange(imageInput)" accept="image/*">
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary" (click)="addImage()">Save Image</button>
+            </div>
+        </div>
+    </div>
+</div>

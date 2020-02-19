@@ -1,0 +1,137 @@
+<div class="container">
+    <form [formGroup]="addItemForm" (ngSubmit)="handleSubmit()">
+        <fieldset>
+            <legend class="text-left pt-2 pb-4 display-4">Add new item</legend>
+            <div class="row py-2">
+                <div class="col-2">
+                    <label for="itemId">Item ID</label>
+                </div>
+                <div class="col-6">
+                    <input class="form-control" type="text" id="itemId" name="itemId" formControlName="itemId">
+                    <span [ngClass]="{
+                        'valid-feedback': addItemForm.value.itemId.length >= 10 && addItemForm.value.itemId.length <= 50,
+                        'invalid-feedback': addItemForm.value.itemId.length < 10 || addItemForm.value.itemId.length > 50
+                     }" class="x-small pl-1">ID length: {{addItemForm.value.itemId.length}}</span>
+
+                </div>
+                <div class="col-3 my-auto">
+                    <div class="invalid-feedback x-small " *ngIf="f.itemId.errors && submitted">
+                        <div *ngIf="f.itemId.errors.required">Unique item ID is required</div>
+                        <div *ngIf="f.itemId.errors.taken">Item ID is already in use</div>
+                        <div *ngIf="f.itemId.errors.pattern">Valid ID can contain only letters, numbers and -</div>
+                        <div *ngIf="f.itemId.errors.minlength">Item ID must be more than 10 characters</div>
+                        <div *ngIf="f.itemId.errors.maxlength">Item ID must be less than 50 characters</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-2">
+                <div class="col-2">
+                    <label for="name">Item name</label>
+                </div>
+                <div class="col-6">
+                    <input class="form-control" type="text" id="name" name="name" formControlName="name">
+                </div>
+                <div class="col-3">
+                    <div class="invalid-feedback small" *ngIf="f.name.errors && submitted">
+                        <div *ngIf="f.name.errors.required">Name is required</div>
+                        <div *ngIf="f.name.errors.minlength">Name must be more than 3 characters</div>
+                        <div *ngIf="f.name.errors.maxlength">Name must be less than 100 characters</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-2">
+                <div class="col-2">
+                    <label for="description">Description</label>
+                </div>
+                <div class="col-6">
+                    <textarea cols="70" rows="3" id="description" name="description"
+                        formControlName="description"></textarea>
+                </div>
+                <div class="col-3">
+                    <div class="invalid-feedback small" *ngIf="f.description.errors && submitted">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
+                        <div *ngIf="f.description.errors.minlength">Description must be more than 10 characters</div>
+                        <div *ngIf="f.description.errors.maxlength">Description must be less than 220 characters</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2 pt-3">
+                    <label for="stock">Item Type</label>
+                </div>
+                <div class="col-2 pt-3">
+                    <select class="form-control" formControlName="type" name="type" id="type">
+                        <option value="" disabled>Selecet type</option>
+                        <option *ngFor="let type of itemTypes" [ngValue]="type">{{type}}</option>
+                    </select>
+                </div>
+                <div class="col-1 text-right pr-0 pt-4">
+                    <label for="price">Price</label>
+                </div>
+                <div class="col-1 pr-0 pt-3">
+                    <input class="form-control" type="number" id="price" name="price" formControlName="price">
+                </div>
+                <div class="col-1 text-right pr-0 pt-4">
+                    <label for="stock">Stock</label>
+                </div>
+                <div class="col-1 pt-3">
+                    <input class="form-control" type="number" id="stock" name="stock" formControlName="stock">
+                </div>
+                <div class="col-3 my-auto">
+                    <div class="invalid-feedback small" *ngIf="submitted && f.type.errors ">
+                        <div *ngIf="f.type.errors.required">Type is required</div>
+                    </div>
+                    <div class="invalid-feedback small" *ngIf="submitted && f.price.errors">
+                        <div *ngIf="f.price.errors.required">Price is required</div>
+                        <div *ngIf="f.price.errors.min">Price can't be negative</div>
+                        <div *ngIf="f.price.errors.max">Price is too high</div>
+                    </div>
+                    <div class="invalid-feedback small overflow-hidden pl-0" *ngIf="submitted && f.stock.errors">
+                        <div *ngIf="f.stock.errors.required">Stock is required</div>
+                        <div *ngIf="f.stock.errors.min">Stock can't be less than 1</div>
+                        <div *ngIf="f.stock.errors.max">Stock is too big</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-4 pb-2">
+                <div class=" col-2 text-right">
+                    <div *ngIf="extraFields < 7" class="btn btn-success" (click)="addExtraField()">Add Field</div>
+                </div>
+                <div class="col-4 text-left">
+                    <div *ngIf="extraFields > 0" class="btn btn-danger" (click)="removeExtraField()">Remove Field</div>
+                </div>
+            </div>
+            <div *ngIf="extraFields > 0">
+                <section formArrayName="extras" *ngFor="let extra of extraFieldControls; let i = index">
+                    <div [formGroupName]="i">
+                        <div class="row">
+                            <div class="col-2 pt-3">
+                                <label for="extraName{{i}}">Extra Name {{i+1}}</label>
+                            </div>
+                            <div class="col-2 pt-2">
+                                <input name="extraName{{i}}" type="text" class="form-control"
+                                    formControlName="extraName">
+                            </div>
+                            <div class="col-2 text-right pt-3">
+                                <label for="extraValue{{i}}">Extra Value {{i+1}}</label>
+                            </div>
+                            <div class="col-2 pt-2">
+                                <input name="extraValue{{i}}" type="text" class="form-control"
+                                    formControlName="extraValue">
+                            </div>
+                            <div class="col-3 my-auto">
+                                <div class="invalid-feedback small"
+                                    *ngIf="submitted && f.extras.controls[i].status === 'INVALID'">
+                                    All fields are required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </fieldset>
+        <div class="col-8 text-right py-4">
+            <button class="btn btn-primary" type="submit">Add item to store</button>
+        </div>
+    </form>
+</div>

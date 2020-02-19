@@ -10,9 +10,9 @@ namespace DezCablez.Data.Models
     {
         public OrderItem()
         {
-            this.Price = this.Quantity * this.Item.Price;
         }
 
+        public int Id { get; set; }
         public int OrderId { get; set; }
 
         [Required]
@@ -29,6 +29,6 @@ namespace DezCablez.Data.Models
 
         [Column(TypeName = "decimal(22, 2)")]
         [Range(typeof(decimal), "0", "79228162514264337593543950335")]
-        public decimal Price { get; set; }
+        public decimal UnitPrice { get; set; }
     }
 }

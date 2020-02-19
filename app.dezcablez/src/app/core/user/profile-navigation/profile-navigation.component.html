@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <div class="container  p-3">
+                <app-profile *ngIf="active === 'profile'"></app-profile>
+                <app-orders *ngIf="active === 'orders'"></app-orders>
+                <app-addresses *ngIf="active === 'addresses'"></app-addresses>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="container p-3">
+                <div class="list-group">
+                    <a [ngClass]="{'active disabled': active==='profile'}" (click)="activate('profile')"
+                        class="btn-option list-group-item list-group-item-action">Profile</a>
+                    <a [ngClass]="{'active disabled': active==='orders'}" (click)="activate('orders')"
+                        class="btn-option list-group-item list-group-item-action">Orders</a>
+                    <a [ngClass]="{'active disabled': active==='addresses'}" (click)="activate('addresses')"
+                        class="btn-option list-group-item list-group-item-action">Addresses</a>
+                </div>
+                <div class="list-group pt-4">
+                    <a (click)="logout()"
+                        class="list-group-item list-group-item-action btn-option btn-logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
