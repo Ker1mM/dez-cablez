@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CartService } from '../services/cart.service';
-import { changeDecimalSign, calculateTotalPrice } from 'src/app/shared/helpers/helper-functions';
 import { IOrder } from 'src/app/core/interfaces/order';
 import { OrderService } from 'src/app/core/services/order.service';
 import { Router } from '@angular/router';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
+
+  private subscription: Subscription;
+
 
   constructor(private cartService: CartService,
     private orderService: OrderService,
@@ -21,13 +24,8 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
     this.cart = this.cartService.getCartContent();
-    this.totalPrice = calculateTotalPrice(this.cart);
+    this.totalPrice = this.cart.reduce((acc, cur) => (acc + (cur.quantity * cur.price)), 0);
   }
-
-  formatPrice(num: number) {
-    return changeDecimalSign(num).num;
-  }
-
 
   order() {
     let orderItems = [];
@@ -42,10 +40,16 @@ export class CheckoutComponent implements OnInit {
     let order: IOrder = {
       orderItems
     }
-    console.log(order); //TODO: unsub
-    this.orderService.sendOrder(order).subscribe((data) => {
+
+    this.subscription = this.orderService.sendOrder(order).subscribe((data) => {
       this.cartService.clearCart();
       this.router.navigate(['profile']);
     });
+  }
+
+  ngOnDestroy(){
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 }

@@ -6,8 +6,24 @@ import { StoreService } from '../services/store.service';
 })
 export class FormatPricePipe implements PipeTransform {
 
-  transform(value: any, ...args: any[]): any { //TODO: change all template functions with pipes
-    return null;
+  //returns number fixed to 2 decimal points
+  //if extra parameter is intPart returns only the int part
+  //if extra parameter is decimalPart returns only the decimal part
+  transform(value: number, type: string): string {
+    let fixedNumber = value.toFixed(2);
+    let intPart = fixedNumber.split('.')[0];
+    let decimalPart = fixedNumber.split('.')[1];
+    let result = `${intPart},${decimalPart}`
+
+
+    if (type === 'intPart') {
+      return intPart;
+    }
+    else if (type === 'decimalPart') {
+      return decimalPart;
+    }
+
+    return result;
   }
 
 }

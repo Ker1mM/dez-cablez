@@ -3,7 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { IUser } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
-import { Subscription, Observable } from 'rxjs';
+import {  Observable } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({

@@ -14,15 +14,15 @@
                         class="img-thumbnail preview">
                 </div>
                 <div class="col-4 overflow-hidden my-auto">{{item.name}}</div>
-                <div class="col-2 my-auto">{{formatPrice(item.price)}}</div>
+                <div class="col-2 my-auto">{{(item.price) | formatPrice}}</div>
                 <div class="col-2 my-auto">{{item.quantity}}</div>
-                <div class="col-2 my-auto">{{formatPrice(item.quantity*item.price)}}</div>
+                <div class="col-2 my-auto">{{(item.quantity*item.price) | formatPrice}}</div>
             </div>
         </div>
     </div>
     <div class="row py-4" *ngIf="cart.length > 0">
         <div class="checkout ml-auto">
-            <span class="mx-3 price-tag">Total price: {{totalPrice}}</span>
+            <span class="mx-3 price-tag">Total price: {{totalPrice | formatPrice}}</span>
         </div>
         <div routerLink="/checkout" class="btn btn-order">Order</div>
     </div>

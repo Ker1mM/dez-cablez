@@ -9,8 +9,7 @@ import {
   state,
   style,
   animate,
-  transition,
-  // ...
+  transition
 } from '@angular/animations';
 
 @Component({
@@ -37,6 +36,7 @@ export class AddressesComponent implements OnInit {
   addFormVisible = false;
   addresses: IAddress[] = [];
   selectedAddressId: string = '0';
+  phonePattern = '^(\\+3598|08)([897])([0-9]{7})$';
 
 
 
@@ -44,14 +44,14 @@ export class AddressesComponent implements OnInit {
     private userService: UserService) { }
 
 
-  addForm = this.fb.group({ //TODO: Add more validations
+  addForm = this.fb.group({
     nickname: ['', Validators.required],
     country: ['', Validators.required],
     city: ['', Validators.required],
-    postalCode: ['', [Validators.required]],
+    postalCode: ['', [Validators.required, Validators.min(1000), Validators.max(9999)]],
     address1: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(220)]],
     address2: ['', [Validators.minLength(2), Validators.maxLength(220)]],
-    phone: ['', Validators.required]
+    phone: ['', [Validators.required, Validators.pattern(this.phonePattern)]]
   })
 
   ngOnInit() {

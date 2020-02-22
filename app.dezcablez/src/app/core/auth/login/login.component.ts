@@ -2,9 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { AuthService } from '../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { state } from '@angular/animations';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +17,7 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
   return: string = '';
 
-  private _unsubscribe$: Subject<void>;
+  private subscription = new Subscription();
   private authFailed = false;
 
   constructor(private fb: FormBuilder,
@@ -34,8 +32,8 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {
-    this.route.queryParams
-      .subscribe(params => this.return = params['return'] || '/');
+    this.subscription.add(this.route.queryParams
+      .subscribe(params => this.return = params['return'] || '/'));
   }
 
   get f() { return this.loginForm.controls; } //easy access to fields
@@ -47,7 +45,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
+    this.subscription.add(this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
       .subscribe(
         (data) => {
           this.router.navigateByUrl(this.return);
@@ -59,13 +57,10 @@ export class LoginComponent implements OnInit {
           this.f.password.reset();
           this.submitted = false;
         }
-      );
+      ));
   }
 
   ngOnDestroy() {
-    if (this._unsubscribe$) {
-      this._unsubscribe$.next();
-      this._unsubscribe$.complete();
-    }
+    this.subscription.unsubscribe();
   }
 }

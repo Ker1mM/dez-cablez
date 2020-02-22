@@ -48,6 +48,7 @@
                             formControlName="postalCode">
                         <div class="invalid-feedback x-small " *ngIf="f.postalCode.errors && submitted">
                             <div *ngIf="f.postalCode.errors.required">Post Code is required</div>
+                            <div *ngIf="f.postalCode.errors.min || f.postalCode.errors.max">Post Code must be valid</div>
                         </div>
                     </div>
                     <div class="col-4">
@@ -55,6 +56,7 @@
                         <input class="form-control" type="text" id="phone" name="phone" formControlName="phone">
                         <div class="invalid-feedback x-small " *ngIf="f.phone.errors && submitted">
                             <div *ngIf="f.phone.errors.required">Contact number is required</div>
+                            <div *ngIf="f.phone.errors.pattern">Enter valid phone number</div>
                         </div>
                     </div>
                 </div>

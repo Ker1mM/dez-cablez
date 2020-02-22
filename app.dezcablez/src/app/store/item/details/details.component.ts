@@ -27,8 +27,6 @@ export class DetailsComponent implements OnInit {
 
   itemId: string;
   item: IItem;
-  price: string;
-  precision: string;
 
   ngOnInit() {
     this.route.paramMap
@@ -46,7 +44,6 @@ export class DetailsComponent implements OnInit {
       .subscribe(
         (data) => {
           this.item = data;
-          this._setPrice(this.item.price);
         },
         (error) => {
           this.router.navigate(['404'])
@@ -56,13 +53,6 @@ export class DetailsComponent implements OnInit {
 
   get isLogged() {
     return this.authService.isLoggedIn();
-  }
-
-  //TODO: Refactor
-  private _setPrice(originalPrice: number) {
-    let fixed = originalPrice.toFixed(2).toString();
-    this.price = fixed.split('.')[0];
-    this.precision = fixed.split('.')[1];
   }
 
   buy() {

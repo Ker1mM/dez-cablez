@@ -22,16 +22,8 @@ export class AuthService {
       ));
   }
 
-  register(username: string, email: string, password: string){
-    return this.http.post(`${environment.API}/authentication/register`, {username, email, password});
-  }
-
-  private setSession(response: IAuthToken) {
-    const expiresAt = moment().add(response.expiresIn, 'second');
-
-    localStorage.setItem('auth_token', response.token);
-    localStorage.setItem('auth_username', response.username);
-    localStorage.setItem('auth_token_expiration_date', JSON.stringify(expiresAt.valueOf()))
+  register(username: string, email: string, password: string) {
+    return this.http.post(`${environment.API}/authentication/register`, { username, email, password });
   }
 
   logout() {
@@ -40,7 +32,7 @@ export class AuthService {
     localStorage.removeItem('auth_token_expiration_date');
   }
 
-  public isLoggedIn() {
+  isLoggedIn() {
     if (moment().isBefore(this.getExpiration())) {
       return true;
     }
@@ -60,6 +52,15 @@ export class AuthService {
   }
 
 
+  //private part
+
+  private setSession(response: IAuthToken) {
+    const expiresAt = moment().add(response.expiresIn, 'second');
+
+    localStorage.setItem('auth_token', response.token);
+    localStorage.setItem('auth_username', response.username);
+    localStorage.setItem('auth_token_expiration_date', JSON.stringify(expiresAt.valueOf()))
+  }
 
 }
 

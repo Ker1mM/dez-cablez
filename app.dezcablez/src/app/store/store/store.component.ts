@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { IItem } from '../interfaces/item';
-import { tap } from 'rxjs/operators';
 import { StoreService } from '../services/store.service';
-import { changeDecimalSign } from 'src/app/shared/helpers/helper-functions';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -20,14 +16,5 @@ export class StoreComponent implements OnInit {
 
   ngOnInit() {
    this.items$ = this.storeService.loadAllItems();
-  }
-
-  
-  getPrice (price: number) {
-    return changeDecimalSign(price).intPart;
-  }
-
-  getPrecision(price: number) {
-    return changeDecimalSign(price).decimalPart;
   }
 }

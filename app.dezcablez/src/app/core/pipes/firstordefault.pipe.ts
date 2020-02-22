@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 
 //returns first object inside 'value' array that has property
-//name equal to 'prop' and value equal to 'toFind'
+//name equal to 'prop' with value equal to 'toFind'
 export class FirstOrDefaultPipe implements PipeTransform {
 
   transform(value: any[], prop: string, toFind: any): any {

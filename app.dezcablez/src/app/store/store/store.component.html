@@ -12,9 +12,9 @@
                 </div>
                 <div class="info-box">
                     <div class="price-box float-right my-auto">
-                        <span>{{this.getPrice(item.price)}}</span>
+                        <span>{{(item.price) | formatPrice:'intPart'}}</span>
                         <span>,</span>
-                        <span>{{getPrecision(item.price)}}</span>
+                        <span>{{(item.price) | formatPrice:'decimalPart'}}</span>
                     </div>
                     <div class="btn btn-primary">Details</div>
                 </div>

@@ -51,11 +51,11 @@
             <div class="col-2">
                 <div class="price-box">
                     <div class="price-tag">
-                        <span class="price">{{price}}</span>
-                        <span class="precision">,{{precision}}</span>
+                        <span class="price">{{item.price | formatPrice:'intPart'}}</span>
+                        <span class="precision">,{{item.price | formatPrice:'decimalPart'}}</span>
                         <hr>
                     </div>
-                    <div class="text-center" >
+                    <div class="text-center">
                         <div *ngIf="item.stock > 0" (click)="buy()" class="btn btn-buy">BUY</div>
                         <div *ngIf="item.stock <= 0" class="btn btn-buy">Out of Stock</div>
                     </div>

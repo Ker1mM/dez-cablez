@@ -12,7 +12,6 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-
   getAllOrders() {
     return this.http.get<IOrder>(`${environment.API}/user/order/all`)
     .pipe(tap(x => {console.log(x)}));

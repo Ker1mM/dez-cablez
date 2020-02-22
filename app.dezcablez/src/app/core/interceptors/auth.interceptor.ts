@@ -14,7 +14,8 @@ export class AuthInterceptor implements HttpInterceptor {
         next: HttpHandler): Observable<HttpEvent<any>> {
         const idToken = localStorage.getItem("auth_token");
 
-        console.log(req);
+        //intercepts all but imgur requests
+        //and adds authentication token to the header if user is logged in
         if (this.authService.isLoggedIn() && idToken && req.url != 'https://api.imgur.com/3/image') {
             const cloned = req.clone({
                 setHeaders: {

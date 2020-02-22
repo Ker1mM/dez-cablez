@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { changeDecimalSign, calculateTotalPrice } from 'src/app/shared/helpers/helper-functions';
 import { CartService } from '../services/cart.service';
 
 @Component({
@@ -10,18 +9,14 @@ import { CartService } from '../services/cart.service';
 export class ShoppingCartComponent implements OnInit {
 
   cart = [];
-  totalPrice: string;
+  totalPrice: number;
 
   constructor(private cartService: CartService) { 
   }
   
   ngOnInit() {
     this.cart = this.cartService.getCartContent();
-    this.totalPrice = changeDecimalSign(calculateTotalPrice(this.cart)).num;
-  }
-
-  formatPrice(num: number): string {
-    return changeDecimalSign(num).num;
+    this.totalPrice = this.cart.reduce((acc, cur) => (acc + (cur.quantity * cur.price)), 0);
   }
 
 }

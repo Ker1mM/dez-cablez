@@ -95,17 +95,19 @@ export class AddItemComponent implements OnInit {
     }
 
     this.subscription = this.itemService.addItem(item)
-    .subscribe((res) => {
-      this.router.navigate([`item/${res.id}`])
-    }, (error) => {
-      if (error.source === 'id') {
-        this.f.itemId.setErrors({ taken: true })
-      }
-    });
+      .subscribe((res) => {
+        this.router.navigate([`item/${res.id}`])
+      }, (error) => {
+        if (error.source === 'id') {
+          this.f.itemId.setErrors({ taken: true })
+        }
+      });
   }
 
-  ngOnDestroy(){
-   this.subscription.unsubscribe();
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }
