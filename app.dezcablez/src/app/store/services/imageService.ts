@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ImageService {
   private url: string = 'https://api.imgur.com/3/image';
   private clientId: string = '546c25a59c58ad7';
-  private accessToken: string = '5fbd517ea213f85775ac3cc6ad0cb1ea6ce34ddf';
+  private accessToken: string = '9d61e814bc8df5e1872e156bc6524c305b40d8ff';
 
 
   constructor(private http: HttpClient) { }

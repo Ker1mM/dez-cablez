@@ -9,7 +9,7 @@
             </div>
         </div>
     </div>
-    <div class="container" *ngIf="addFormVisible">
+    <div  @showHideTrigger class="container" *ngIf="addFormVisible">
         <hr>
         <form [formGroup]="addForm" (ngSubmit)="handleSubmit()">
             <fieldset class="border">

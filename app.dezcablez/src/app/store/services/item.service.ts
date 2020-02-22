@@ -17,10 +17,7 @@ export class ItemService {
     }
 
     addItem(item: IItem) {
-        return this.http.post<IValidCreate>(`${environment.API}/item/add`, item)
-            .pipe(tap((res) => {
-                console.log(res);
-            }))
+        return this.http.post<IValidCreate>(`${environment.API}/item/add`, item);
     }
 
     changeThumbnail(itemId: string, link: string) {

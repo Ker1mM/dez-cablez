@@ -10,6 +10,7 @@ import { OrdersComponent } from './user/orders/orders.component';
 import { ProfileNavigationComponent } from './user/profile-navigation/profile-navigation.component';
 import { AddressesComponent } from './user/addresses/addresses.component';
 import { FirstOrDefaultPipe } from './pipes/firstordefault.pipe';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -26,7 +27,8 @@ import { FirstOrDefaultPipe } from './pipes/firstordefault.pipe';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CoreRoutingModule
+    CoreRoutingModule,
+    NgbCarouselModule
   ],
   exports: [
 

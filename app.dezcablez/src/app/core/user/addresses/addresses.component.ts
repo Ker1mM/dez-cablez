@@ -4,11 +4,30 @@ import { IAddress } from 'src/app/store/interfaces/address';
 import { UserService } from '../../services/user.service';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  // ...
+} from '@angular/animations';
 
 @Component({
   selector: 'app-addresses',
   templateUrl: './addresses.component.html',
-  styleUrls: ['./addresses.component.scss']
+  styleUrls: ['./addresses.component.scss'],
+  animations: [
+    trigger('showHideTrigger', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('2s', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('200ms', style({ opacity: 0 }))
+      ])
+    ]),
+  ]
 })
 export class AddressesComponent implements OnInit {
 
@@ -43,7 +62,7 @@ export class AddressesComponent implements OnInit {
 
 
   toggle() {
-    this.addFormVisible = this.addFormVisible ? false : true;
+    this.addFormVisible = !this.addFormVisible;
   }
 
   loadAddresses() {
@@ -56,7 +75,7 @@ export class AddressesComponent implements OnInit {
 
   handleSubmit() {
     this.submitted = true;
-    
+
     if (this.addForm.invalid) {
       return;
     }

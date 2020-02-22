@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { IUser } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 import { Subscription, Observable } from 'rxjs';

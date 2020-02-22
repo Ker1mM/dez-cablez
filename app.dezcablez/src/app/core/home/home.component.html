@@ -1,1 +1,14 @@
-<span>home works!</span>
+<div class="container" >
+    <ngb-carousel class="caro" *ngIf="images" [showNavigationArrows]="showNavigationArrows"
+        [showNavigationIndicators]="showNavigationIndicators">
+        <ng-template ngbSlide *ngFor="let image of images">
+            <div class="picsum-img-wrapper">
+                <img [src]="image" alt="img" height="600px" width="100%">
+            </div>
+            <div class="carousel-caption">
+                <h3 class="dark">Cablez for everyone!</h3>
+                <p class="dark">Best custom cablez anywhere!</p>
+            </div>
+        </ng-template>
+    </ngb-carousel>
+</div>

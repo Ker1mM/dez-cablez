@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { AuthService } from '../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { state } from '@angular/animations';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -17,15 +19,19 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
   return: string = '';
 
+  private _unsubscribe$: Subject<void>;
+  private authFailed = false;
+
   constructor(private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['']
     });
   }
+
 
   ngOnInit() {
     this.route.queryParams
@@ -37,7 +43,6 @@ export class LoginComponent implements OnInit {
   handleSubmit() {
     this.submitted = true;
 
-    console.log('click')
     if (this.loginForm.invalid) {
       return;
     }
@@ -49,11 +54,18 @@ export class LoginComponent implements OnInit {
         }, error => {
           this.savedUsername = this.loginForm.value.username;
           if (error.status === 400) {
-            this.f.username.setErrors({ unauthorized: true });
+            this.authFailed = true;
           }
           this.f.password.reset();
           this.submitted = false;
         }
       );
+  }
+
+  ngOnDestroy() {
+    if (this._unsubscribe$) {
+      this._unsubscribe$.next();
+      this._unsubscribe$.complete();
+    }
   }
 }

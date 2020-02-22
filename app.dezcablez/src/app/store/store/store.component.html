@@ -1,18 +1,23 @@
-<div class="row ">
-    <div *ngFor="let item of (items$ | async)" class="col-3" >
-        <div class="item-box mx-auto" routerLink="/item/{{item.id}}">
-            <img height="200" width="200" src="{{item.thumbnail}}" alt="{{item.name}}" >
-            <div class="name-tag my-auto"><span>
-                    {{item.name}}
-                </span>
-            </div>
-            <div class="info-box">
-                <div class="price-box float-right my-auto">
-                    <span>{{this.getPrice(item.price)}}</span>
-                    <span>,</span>
-                    <span>{{getPrecision(item.price)}}</span>
+<div class="container page">
+    <div class="page" *ngIf="!(items$ | async)">
+        <span class="missing">No items to be shown at this time.</span>
+    </div>
+    <div class="row" *ngIf="(items$ | async)">
+        <div *ngFor="let item of (items$ | async)" class="col-3">
+            <div class="item-box mx-auto" routerLink="/item/{{item.id}}">
+                <img height="200" width="200" src="{{item.thumbnail}}" alt="{{item.name}}">
+                <div class="name-tag my-auto"><span>
+                        {{item.name}}
+                    </span>
                 </div>
-                <div class="btn btn-primary">Details</div>
+                <div class="info-box">
+                    <div class="price-box float-right my-auto">
+                        <span>{{this.getPrice(item.price)}}</span>
+                        <span>,</span>
+                        <span>{{getPrecision(item.price)}}</span>
+                    </div>
+                    <div class="btn btn-primary">Details</div>
+                </div>
             </div>
         </div>
     </div>

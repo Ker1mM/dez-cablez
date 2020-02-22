@@ -46,7 +46,7 @@ namespace DezCablez.Web.Controllers
             var item = this._mapper.Map<ItemModel>(dbItem);
 
             return Ok(item);
-        }
+        } 
 
         [HttpPost]
         [Route("image/change")]

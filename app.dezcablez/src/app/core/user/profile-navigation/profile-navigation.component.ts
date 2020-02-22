@@ -22,6 +22,9 @@ export class ProfileNavigationComponent implements OnInit {
 
   activate(tab: string) {
     this.active = tab;
+    if(this.authService.isLoggedOut()){
+      this.logout();
+    }
   }
 
   logout() {

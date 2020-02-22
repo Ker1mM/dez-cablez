@@ -34,7 +34,8 @@ const routes: Routes = [
             {
                 path: 'add',
                 pathMatch: 'full',
-                component: AddItemComponent
+                component: AddItemComponent,
+                canActivate: [AuthGuard]
             },
         ]
     },

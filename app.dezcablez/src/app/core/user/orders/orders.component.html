@@ -1,34 +1,32 @@
-<div class="container">
-    <div class="row text-center">
-        <div class="col-1">#</div>
-        <div class="col-6">Item</div>
-        <div class="col-1">Quantity</div>
-        <div class="col-1">Price</div>
-        <div class="col-2">Order Date</div>
-        <div class="col-1">Status</div>
-    </div>
-</div>
-<div class="container" *ngIf="(orders$ | async) as oldOrders">
-    <div class="row py-2 text-center" *ngFor="let order of oldOrders; let i = index">
-        <div class="col-1">{{i+1}}</div>
-        <div class="col-6">
-            <div *ngFor="let item of order.orderItems">
-                {{item.name}}
-            </div>
-        </div>
-        <div class="col-1">
-            <div *ngFor="let item of order.orderItems">
-                {{item.quantity}}
-            </div>
-        </div>
-        <div class="col-1">
-            {{order.price}}
-        </div>
-        <div class="col-2">
-            {{order.date}}
-        </div>
-        <div class="col-1">
-            {{order.status}}
-        </div>
-    </div>
-</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody  *ngIf="(orders$ | async) as oldOrders">
+        <tr @orderTrigger *ngFor="let order of oldOrders; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>
+                <div *ngFor="let item of order.orderItems">
+                    {{item.name}}
+                </div>
+            </td>
+            <td>
+                <div class="col-1">
+                    <div *ngFor="let item of order.orderItems">
+                        {{item.quantity}}
+                    </div>
+                </div>
+            </td>
+            <td>{{order.price}}</td>
+            <td>{{order.date}}</td>
+            <td>{{order.status}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -5,7 +5,8 @@ import { IItem } from '../../interfaces/item';
 import { ɵNgStyleImpl } from '@angular/common';
 import { Router } from '@angular/router';
 import { resources } from 'src/app/shared/resources';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-item',
@@ -93,7 +94,8 @@ export class AddItemComponent implements OnInit {
       item[value] = this.addItemForm.value.extras[i].extraValue;
     }
 
-    this.subscription = this.itemService.addItem(item).subscribe((res) => {
+    this.subscription = this.itemService.addItem(item)
+    .subscribe((res) => {
       this.router.navigate([`item/${res.id}`])
     }, (error) => {
       if (error.source === 'id') {
@@ -103,7 +105,7 @@ export class AddItemComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.subscription.unsubscribe();
+   this.subscription.unsubscribe();
   }
 
 }
