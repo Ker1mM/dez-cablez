@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   constructor(config: NgbCarouselConfig) {
     config.showNavigationArrows = true;
     config.showNavigationIndicators = false;
+    config.interval = 1000;
   }
 
   ngOnInit() {

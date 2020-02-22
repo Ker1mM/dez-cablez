@@ -10,8 +10,7 @@
     <div *ngIf="cart.length > 0">
         <div *ngFor="let item of cart">
             <div class="row pt-2 ">
-                <div class="col-2 text-center my-auto"><img src="{{item.thumbnail}}"
-                        class="img-thumbnail preview">
+                <div class="col-2 text-center my-auto"><img src="{{item.thumbnail}}" class="img-thumbnail preview">
                 </div>
                 <div class="col-4 overflow-hidden my-auto">{{item.name}}</div>
                 <div class="col-2 my-auto">{{(item.price) | formatPrice}}</div>
@@ -21,6 +20,9 @@
         </div>
     </div>
     <div class="row py-4" *ngIf="cart.length > 0">
+        <div class="ml-auto">
+            <div (click)="emptyCart()" class="btn btn-order">Clear Cart</div>
+        </div>
         <div class="checkout ml-auto">
             <span class="mx-3 price-tag">Total price: {{totalPrice | formatPrice}}</span>
         </div>
